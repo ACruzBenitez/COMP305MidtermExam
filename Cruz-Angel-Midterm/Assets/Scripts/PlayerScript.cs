@@ -14,8 +14,7 @@ public class PlayerScript : MonoBehaviour
     public float groundRadius;
     public LayerMask groundLayerMask;
     public bool isGrounded;
-    private bool openchest = false;
-    public bool chestclass = false;
+    
 
     [Header("Animation Properties")]
     public Animator animator;
@@ -34,11 +33,7 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-       if (openchest==true && Input.GetKey(KeyCode.E))
-            {
-                Debug.Log("2");
-            chestclass = true;
-            } 
+       
         Move();
 
     }
@@ -101,13 +96,7 @@ public class PlayerScript : MonoBehaviour
     }
     //collisions
 
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "Ground"){
-            openchest = true;
-			Debug.Log("myfuckinggod");
-        }
-    }
+    
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
