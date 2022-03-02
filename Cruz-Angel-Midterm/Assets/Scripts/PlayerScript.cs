@@ -49,7 +49,8 @@ public class PlayerScript : MonoBehaviour
                 if (run != 0)
             {
                 run = Flip(run);
-
+                animator.SetInteger("AnimationState", 1);
+        
             }
             else if(run == 0 && jump == 0)
             {
@@ -59,6 +60,11 @@ public class PlayerScript : MonoBehaviour
             {
              animator.SetInteger("AnimationState", 2);
             }
+            if (Input.GetKey(KeyCode.S))
+            {
+             animator.SetInteger("AnimationState", 3);
+            }
+            
         
             Vector2 move = new Vector2(run * horizontalForce, jump * verticalForce);
             rigidbody2D.AddForce(move);
