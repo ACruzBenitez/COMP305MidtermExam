@@ -14,6 +14,8 @@ public class PlayerScript : MonoBehaviour
     public float groundRadius;
     public LayerMask groundLayerMask;
     public bool isGrounded;
+    private bool openchest = false;
+    public bool chestclass = false;
 
     [Header("Animation Properties")]
     public Animator animator;
@@ -32,6 +34,11 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+       if (openchest==true && Input.GetKey(KeyCode.E))
+            {
+                Debug.Log("2");
+            chestclass = true;
+            } 
         Move();
 
     }
@@ -58,10 +65,12 @@ public class PlayerScript : MonoBehaviour
             }
             if(jump > 0)
             {
-             animator.SetInteger("AnimationState", 2);
+                animator.SetInteger("AnimationState", 2);
+                //run = 0;
             }
             if (Input.GetKey(KeyCode.S))
             {
+                run = 0;
              animator.SetInteger("AnimationState", 3);
             }
             
@@ -71,6 +80,17 @@ public class PlayerScript : MonoBehaviour
 
             
         }
+        else{
+            float run = Input.GetAxisRaw("Horizontal");
+             if (run != 0)
+            {
+                run = Flip(run);
+                animator.SetInteger("AnimationState", 2);
+            }
+            Vector2 move = new Vector2(run/3 * horizontalForce,0);
+            rigidbody2D.AddForce(move);
+        }
+
     }
     private float Flip(float x)
     {
@@ -80,7 +100,14 @@ public class PlayerScript : MonoBehaviour
         return x;
     }
     //collisions
-    
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Ground"){
+            openchest = true;
+			Debug.Log("myfuckinggod");
+        }
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
